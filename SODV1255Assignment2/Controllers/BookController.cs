@@ -1,52 +1,83 @@
 using Microsoft.AspNetCore.Mvc;
 using SODV1255Assignment2.Models;
+using SODV1255Assignment2.Repositories;
 
-namespace SODV1255Assignment2
+namespace SODV1255Assignment2.Controllers
 {
+    [ApiController]
     [Route("/books")]
     public class BookController : Controller
     {
-        internal List<Book> books = new List<Book>()
+        private readonly BookRepository _bookRepository;
+
+        public BookController(BookRepository bookRepository)
         {
-            new Book("1984", "George Orwell", "Dystopian", "1949"),
-            new Book("The Hobbit", "J.R.R Tolkien", "Fantasy", "1937"),
-            new Book("The Da Vinci Code", "Dan Brown", "Mystery Thriller", "2003"),
-            new Book("Charlotte's Web", "E.B. White", "Children's Fiction", "1952"),
-            new Book("To Kill a Mockingbird", "Harper Lee", "Southern Gothic", "1960")
-        };
+            _bookRepository = bookRepository;
+        }
 
         [HttpGet]
         public IActionResult GetAllBooks()
         {
-            return Ok(books);
+            return Ok(_bookRepository.GetAllBooks());
         }
 
 
         [HttpGet("{id}")]
         public IActionResult GetBookById(int id)
         {
-            return Ok(books[id - 1]);
+            try
+            {
+                return Ok(_bookRepository.GetBookById(id - 1));
+            } catch (ArgumentOutOfRangeException)
+            {
+                return NotFound($"Book #{id} not found.");
+            } catch (FormatException)
+            {
+                return NotFound($"Query formatted incorrectly.");
+            }
+
         }
 
         [HttpPost]
-        public IActionResult PostBook(Book book)
+        public IActionResult AddBook([FromBody] BookDTO bookDTO)
         {
-            books.Add(book);
-            return Ok(book);
+            Book book = new Book(bookDTO.Title, bookDTO.Author, bookDTO.Genre, bookDTO.Publication);
+            return Ok(_bookRepository.AddBook(book));
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateBook(Book book, int id)
+        public IActionResult AddBook([FromBody] BookDTO bookDTO, int id)
         {
-            books[id - 1] = book;
-            return Ok(book);
+            Book book = new Book(bookDTO.Title, bookDTO.Author, bookDTO.Genre, bookDTO.Publication);
+
+            try
+            {
+                return Ok(_bookRepository.UpdateBook(book, id - 1));
+            } catch (ArgumentOutOfRangeException)
+            {
+                return NotFound($"Book #{id} not found.");
+            } catch (FormatException)
+            {
+                return NotFound($"Query formatted incorrectly.");
+            }
+
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteBook(Book book, int id)
+        public IActionResult DeleteBook(int id)
         {
-            books.RemoveAt(id);
-            return NoContent();
+            try
+            {
+                _bookRepository.DeleteBook(id - 1);
+                return NoContent();
+            } catch (ArgumentOutOfRangeException)
+            {
+                return NotFound($"Book #{id} not found.");
+            } catch (FormatException)
+            {
+                return NotFound($"Query formatted incorrectly.");
+            }
+
         }
     }
 }

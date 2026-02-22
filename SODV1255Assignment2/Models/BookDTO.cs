@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SODV1255Assignment2.Models
 {
-    public class Book
+    public class BookDTO
     {
         [Required(ErrorMessage = "Title is mandatory.")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "Title must be between 2 and 100 characters.")]
@@ -19,26 +19,5 @@ namespace SODV1255Assignment2.Models
         [Required(ErrorMessage = "Publication is mandatory.")]
         [Range(868, 3000, ErrorMessage = "Publication must be between year 868 and 3000")]
         public int Publication { get; set; }
-
-        public bool Availability { get; private set; }
-
-        public Book(string title, string author, string genre, int publication)
-        {
-            Title = title;
-            Author = author;
-            Genre = genre;
-            Publication = publication;
-            Availability = true;
-        }
-
-        public void ToggleAvailability()
-        {
-            Availability = !Availability;
-        }
-
-        public override string ToString()
-        {
-            return $"Title: {Title} | Author: {Author} | Genre: {Genre} | Publication Year: {Publication} | Available: {(Availability ? "Yes" : "No")}";
-        }
     }
 }
