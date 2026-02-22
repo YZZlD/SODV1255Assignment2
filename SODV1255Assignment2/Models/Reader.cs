@@ -4,6 +4,9 @@ namespace SODV1255Assignment2.Models
 {
     public class Reader
     {
+        // The only necessary information provided to a reader object is the name. The id is auto-incremented upon reader
+        //object creation and is a static id incremented globally
+
         public int ReaderID { get; set; }
 
         [Required(ErrorMessage = "Name is mandatory.")]

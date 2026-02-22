@@ -4,6 +4,8 @@ namespace SODV1255Assignment2.Repositories
 {
     public class ReaderRepository
     {
+
+        //Reader repository is identical in functionality to book repository
         private List<Reader> _readers = new List<Reader>();
 
         public List<Reader> GetAllReaders()

@@ -4,6 +4,9 @@ namespace SODV1255Assignment2.Models
 {
     public class Book
     {
+        // A book has an author, title, genre and publication date. Availability is automatically determined and manipulated by
+        //different actions in the LMS such as adding or deleting a borrowing listing or modifying the book in that listing
+
         [Required(ErrorMessage = "Title is mandatory.")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "Title must be between 2 and 100 characters.")]
         public string Title { get; set; }

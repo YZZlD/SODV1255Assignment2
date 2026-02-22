@@ -4,6 +4,7 @@ namespace SODV1255Assignment2.Models
 {
     public class BookDTO
     {
+        //Serves to grab and validate all necessary fields for a book model object
         [Required(ErrorMessage = "Title is mandatory.")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "Title must be between 2 and 100 characters.")]
         public string Title { get; set; }

@@ -8,6 +8,7 @@ namespace SODV1255Assignment2.Controllers
     [Route("/borrowings")]
     public class BorrowingController : Controller
     {
+        //Borrowing needs access to all repositories as it must see which books and readers requests are referencing by id
         private readonly BorrowingRepository _borrowingRepository;
         private readonly BookRepository _bookRepository;
         private readonly ReaderRepository _readerRepository;
@@ -46,6 +47,7 @@ namespace SODV1255Assignment2.Controllers
         {
             try
             {
+                //Retrieve book and user from relevant repositories and pass to borrowing repository to make a new borrowing object
                 Book book = _bookRepository.GetBookById(borrowingDTO.bookID - 1);
                 Reader reader = _readerRepository.GetReaderById(borrowingDTO.readerID - 1);
                 if(!book.Availability) return Ok("Book is not available");
@@ -67,6 +69,8 @@ namespace SODV1255Assignment2.Controllers
             {
                 Book book = _bookRepository.GetBookById(borrowingDTO.bookID - 1);
                 Reader reader = _readerRepository.GetReaderById(borrowingDTO.readerID - 1);
+                //Check to see if the book referenced is not the same book as is currently in the borrowing object if it is update the listing.
+                //If it is not check if the book is available if it is make the listing otherwise display the book is unavailable.
                 if(!book.Availability && (_bookRepository.GetBookById(borrowingDTO.bookID - 1) != _borrowingRepository.GetBorrowingById(id - 1).Book)) return Ok("Book is not available");
                 return Ok(_borrowingRepository.UpdateBorrowing(book, reader, id - 1));
             } catch (ArgumentOutOfRangeException)

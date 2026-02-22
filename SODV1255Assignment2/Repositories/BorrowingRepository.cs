@@ -4,6 +4,8 @@ namespace SODV1255Assignment2.Repositories
 {
     public class BorrowingRepository
     {
+
+        //Similar to other repositories in this project with the difference of update
         private List<Borrowing> _borrowings = new List<Borrowing>();
 
         public List<Borrowing> GetAllBorrowings()
@@ -23,6 +25,7 @@ namespace SODV1255Assignment2.Repositories
             return borrowing;
         }
 
+        //Update must temporarily store the original book to toggle the availability of the book after replacing it (assuming no error are thrown)
         public Borrowing UpdateBorrowing(Book book, Reader reader, int id)
         {
             Borrowing tempBorrowing = _borrowings[id];
@@ -32,6 +35,7 @@ namespace SODV1255Assignment2.Repositories
             return updatedBorrowing;
         }
 
+        //Deleting the book must also toggle the availability of the book accessed before deleting it.
         public void DeleteBorrowing(int id)
         {
             _borrowings[id].Book.ToggleAvailability();

@@ -4,6 +4,7 @@ using SODV1255Assignment2.Repositories;
 
 namespace SODV1255Assignment2.Controllers
 {
+    //Book controller is simply get, get{id}, post, put, delete routes for basic object manipulation
     [ApiController]
     [Route("/books")]
     public class BookController : Controller

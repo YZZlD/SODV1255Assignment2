@@ -4,6 +4,7 @@ using SODV1255Assignment2.Repositories;
 
 namespace SODV1255Assignment2.Controllers
 {
+    //Reader controller is simply get, get{id}, post, put, delete routes for basic object manipulation
     [ApiController]
     [Route("/readers")]
     public class ReaderController : Controller
