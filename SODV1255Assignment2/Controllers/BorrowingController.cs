@@ -67,7 +67,7 @@ namespace SODV1255Assignment2.Controllers
             {
                 Book book = _bookRepository.GetBookById(borrowingDTO.bookID - 1);
                 Reader reader = _readerRepository.GetReaderById(borrowingDTO.readerID - 1);
-                if(!book.Availability) return Ok("Book is not available");
+                if(!book.Availability && (_bookRepository.GetBookById(borrowingDTO.bookID - 1) != _borrowingRepository.GetBorrowingById(id - 1).Book)) return Ok("Book is not available");
                 return Ok(_borrowingRepository.UpdateBorrowing(book, reader, id - 1));
             } catch (ArgumentOutOfRangeException)
             {

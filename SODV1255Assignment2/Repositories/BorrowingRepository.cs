@@ -25,8 +25,6 @@ namespace SODV1255Assignment2.Repositories
 
         public Borrowing UpdateBorrowing(Book book, Reader reader, int id)
         {
-            Console.WriteLine(book);
-            Console.WriteLine(reader);
             Borrowing tempBorrowing = _borrowings[id];
             Borrowing updatedBorrowing = new Borrowing(book, reader);
             _borrowings[id] = updatedBorrowing;
@@ -36,6 +34,7 @@ namespace SODV1255Assignment2.Repositories
 
         public void DeleteBorrowing(int id)
         {
+            _borrowings[id].Book.ToggleAvailability();
             _borrowings.RemoveAt(id);
         }
     }
